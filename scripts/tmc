@@ -1,0 +1,31 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+case $1 in
+  "") tmux ;;
+  s) tmux split-window -$2 ;;
+  gw) tmux select-window -t $2 ;;
+  gp) tmux select-pane -t $2 ;;
+  nw) tmux new-window ;;
+  kw) tmux kill-window ;;
+  ks) tmux kill-session ;;
+  lp) tmux display-panes ;;
+  rns) tmux rename-session $2 ;;
+  rnw) tmux rename-window $2 ;;
+  tb) tmux set-option status $2 ;;
+  ls) tmux ls ;;
+  lw) tmux list-windows | awk '{print $1$2}' | sed -e 's/*/ (active)/' -Ee 's/-|!//g' ;;
+  -h)
+    echo "s     split window (h or v)"
+    echo "gw    go to window (1 or 2...)"
+    echo "gp    go to pane (1 or 2 ...)"
+    echo "nw    new window"
+    echo "kw    kill current window"
+    echo "ks    Kill current session"
+    echo "lp    number panes"
+    echo "lw    list windows"
+    echo "ls    list sessions"
+    echo "tb    toggle status bar (on or off)"
+    echo "rnw    rename window (title)"
+    echo "rns   rename session (title)"
+    ;;
+esac

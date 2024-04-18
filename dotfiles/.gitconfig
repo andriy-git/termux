@@ -1,0 +1,21 @@
+[user]
+	name = Andriy Lapitskyy
+	email = emandriy88@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+[pull]
+	rebase = true
+[alias]
+	llog = log --oneline --graph --all
+  o = push
+  i = pull
+  c = commit
+  st = status
+  s = switch
+  lb = branch --all
+  b = branch
+  a = add
+  f = fetch
+  m = merge

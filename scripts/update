@@ -1,0 +1,79 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Yellow Bold Underlined Next Line
+function colorTitle1() {
+  tput bold smul setaf 11; echo "${*}" && tput sgr0 setaf 247
+}
+
+tmpFolder="/data/data/com.termux/files/usr/tmp"
+
+# Arch
+if [[ "$(command -v pacman)" ]]; then
+  colorTitle1 Pacman
+  sudo pacman -Syyu --noconfirm
+  sudo pacman -Rns "$(pacman -Qtdq)"
+  if [[ "$(command -v paru)" ]]; then
+    colorTitle1 Paru
+    paru -Syyu --noconfirm
+    paru -Rns "$(paru -Qtdq)"
+  fi
+fi
+
+# Debian
+if [[ "$(command -v pkcon)" ]]; then
+  colorTitle1 PkCon
+  sudo pkcon update -y
+  sudo apt-get autoclean
+  sudo apt-get autoremove -y
+elif [[ "$(command -v apt-get)" ]]; then
+  colorTitle1 Apt
+  apt-get update
+  apt-get upgrade -y
+  apt-get autoclean
+  apt-get autoremove -y
+fi
+
+# Snap (Try not to use this one if you don't have to, this is what creates all those loops)
+if [[ "$(command -v snap)" ]]; then
+  colorTitle1 Snap
+  snap list
+  sudo snap refresh
+fi
+
+# Cargo
+if [[ "$(command -v cargo)" ]]; then
+  colorTitle1 Cargo
+  cargo install-update -a
+fi
+
+# Flatpak (Don't use unless you have to, flatpaks give weird names to run their programs)
+if [[ "$(command -v flatpak)" ]]; then
+  colorTitle1 Flatpak
+  flatpak list | awk '!seen[$1]++ {print $1}'
+  flatpak update --assumeyes
+fi
+
+# Nix (Outside on NixOS, will not create desktop run option)
+if [[ "$(command -v nix)" ]]; then
+  colorTitle1 Nix-Env
+  sudo nix-channel --update &>/dev/null || nix-channel --update
+  nix-env -q
+  sudo nix-env -u &>/dev/null || nix-env -u
+fi
+
+# Pip
+if [[ "$(command -v pip)" ]]; then
+  colorTitle1 Pip
+  pip3 list --outdated | tee "$tmpFolder"/updatescript
+  if grep -q wheel "$tmpFolder"/updatescript; then
+    grep wheel "$tmpFolder"/updatescript | xargs -n1 pip3 install -U 2>/dev/null
+  fi
+  rm "$tmpFolder"/updatescript
+fi
+# Npm (JavaScripts)
+if [[ "$(command -v npm)" ]]; then
+  colorTitle1 Npm
+  npm ls
+  npm ls -g
+  npm update
+fi

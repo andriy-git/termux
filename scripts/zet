@@ -1,0 +1,38 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+case $1 in
+  "") # Empty field prints iso seconds
+    date +%Y%m%d%H%M%S
+  ;;
+  -n | --new ) # Puts you in README.md file to create new zet entry
+    nZet=$(zet)
+    echo "[$nZet]($nZet.md)  " >> "$HOME"/.vim/VimWiki/Zet/README.md
+    echo "# $nZet" >> "$HOME"/.vim/VimWiki/Zet/"$nZet".md
+    "$EDITOR" "$HOME"/.vim/VimWiki/Zet/"$nZet".md
+  ;;
+  -s | --search) # in progress...
+    awk -v RS='' -v ORS='\n\n' -v SEARCH="$2" '{IGNORECASE = 1} $0 ~ SEARCH' ~/.vim/VimWiki/Zet/*
+  ;;
+  -h | --help) # Help menu
+    echo "No arguments will give you iso seconds"
+    echo "-n or --new            New entry"
+    echo "-s or --search         Search by keyword through existing Zets"
+    echo "                       Use . as spaces in search"
+    echo "-o,-e,--edit,--open    Opens existing entry if full iso second is provided"
+    echo "-d                     Gives ability to change + or - time from isosec"
+    echo "                       First: amount Second: seconds, hours, days, etc."
+    echo "index                  Will go to index page"
+  ;;
+  index)
+   $EDITOR "$HOME"/.vim/VimWiki/Zet/README.md
+  ;;
+  -o | -e | --edit | --open) # Opens specific entry when iso second is entered
+    $EDITOR "$HOME"/.vim/VimWiki/Zet/*"$2"*.md
+  ;;
+  -d)
+    date +%Y%m%d%H%M%S -d "$2 $3"
+  ;;
+  *)
+    echo "Use -h or --help for help"
+  ;;
+esac

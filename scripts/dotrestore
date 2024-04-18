@@ -1,0 +1,31 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+dotdir="$HOME/.local/termux/dotfiles"
+
+colorWord2(){
+  tput setaf 1; printf "%s" "${1}" && tput setaf 247
+}
+
+# $1 Program $2 My location $3 Necessary file location
+mustrestore() {
+  local thewhat
+  thewhat=$(colorWord2 "$1")
+  # -h file exists and is a symlink 
+  if [[ -h $3 ]]; then
+    echo "${thewhat} is already restored."  
+  else
+    ln -sf "$dotdir"/"$2" "$3"
+    echo "${thewhat} has been restored"
+  fi
+}
+
+# $1 Program $2 My location $3 Necessary file location
+mustrestore ranger ranger "$HOME"/.config/ranger
+mustrestore vim .vim "$HOME"/.vim
+mustrestore vimrc .vimrc "$HOME"/.vimrc
+mustrestore tmux tmux/.tmux.conf "$HOME"/.tmux.conf
+mustrestore git .gitconfig "$HOME"/.gitconfig
+mustrestore zsh shell/.zshrc "$HOME"/.zshrc
+mustrestore bash shell/.bashrc "$HOME"/.bashrc
+mustrestore termux .termux "$HOME"/.termux
+#mustrestore 

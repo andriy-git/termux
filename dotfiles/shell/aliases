@@ -1,0 +1,30 @@
+#################################################################
+#    ____            _            _    _ _                      #
+#   | __ )  __ _ ___| |__        / \  | (_) __ _ ___  ___  ___  #
+#   |  _ \ / _` / __| '_ \      / _ \ | | |/ _` / __|/ _ \/ __| #
+#  _| |_) | (_| \__ \ | | |    / ___ \| | | (_| \__ \  __/\__ \ #
+# (_)____/ \__,_|___/_| |_|___/_/   \_\_|_|\__,_|___/\___||___/ #
+#                        |_____|                                #
+#################################################################
+# Curl, Web, & app launcher
+alias myip=' curl -sl ipinfo.io | jq'
+
+alias ls='ls -a'
+alias gt=' . $HOME/.local/termux/scripts/gt' # Don't remove. gt will not work without this/
+alias ip=' ip -c' #Adds colors
+alias mv=' mv -i' #Prompts before overwriting
+#alias cat=" bat -p"
+#alias more=" bat"
+alias path=' echo -e "${PATH//:/\\n}" | uniq'
+alias bookpage='cat ~/.vim/VimWiki/VimWiki/bookreading.md'
+alias figlet=' pyfiglet'
+
+# Edit Config Files
+alias mybash=' $EDITOR ~/.bashrc'
+alias myzsh=' $EDITOR ~/.zshrc'
+alias myalias=' $EDITOR ~/.local/termux/dotfiles/shell/aliases'
+alias myvim=' $EDITOR ~/.vimrc'
+alias mynotes=' bash ~/.local/termux/scripts/clinotes enter'
+alias note=' bash ~/.local/termux/scripts/clinotes edit'
+alias notes=' bash ~/.local/termux/scripts/clinotes view'
+alias mytmux=' $EDITOR ~/.tmux.conf'

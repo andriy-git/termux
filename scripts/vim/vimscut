@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+# Script that shows me my vim shortcuts
+location=$HOME/.vim/VimWiki/VimWiki/vim.md 
+awk '/^## Personal SC$/,0' "${location}" | sed 's/\*\*\*//g' | column -t -s ::

@@ -1,0 +1,68 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Colors
+y='\033[33m'   # Yellow
+x='\033[0m'    # Reset default
+
+# Variables
+webSite="https://go.dev/dl/"
+typeV="linux-amd64"
+latestVersion=$(curl -s "${webSite}" | grep "${typeV}" | awk 'NR==1 {print $NF}' | sed -e 's/">//' | sed -E 's;.*/;;')
+
+echo "This script is to install, update, or switch Go versions."
+if [[ -d $HOME/.local/lib/go ]]; then
+  echo -e "Your are currently on ${y}$(go version)${x}"
+  echo -e "Latest stable version ${y}${latestVersion}${x}"
+else
+  echo "Golang is not installed"
+fi
+echo ""
+
+read -rp "Do you want to install the (latest) version or (another) version: " choice0
+
+case "${choice0}" in
+  another)
+    anotherVersion=$(curl -sL "$webSite" | grep "${typeV}" | awk -F '">' 'NR>=3 {print $NF}' | sed -E 's;gz.*$;gz;' | tac )
+    echo "Different version can be found at ${webSite}"
+    echo "${anotherVersion}"
+    read -rp "Enter the link or file name for the version of Go you want: " goLink
+    versionGO=$(echo "${goLink}" | awk -F '/' '{print $NF}' | grep go | grep "${typeV}")
+    if [[ -z ${versionGO} ]]; then
+      echo "Doesn't seem right. Exiting!"
+      exit 1
+    fi
+    echo "File that will be downloaded ${versionGO}" 
+    sleep 5
+    echo ""
+    read -rp "Is this correct? (y,yes) " choice1
+    if [[ "${choice1,}" == y || "${choice1,,}" == yes ]]; then
+      if [[ ! -d $HOME/.local/lib ]]; then
+        mkdir "$HOME/.local/lib"
+      fi
+      curl -L "${webSite}""${versionGO}" --output "$HOME/.local/lib/${versionGO}"
+      if [[ -d $HOME/.local/lib/go ]]; then
+        rm -rf "$HOME/.local/lib/go"
+      fi
+      tar -C "$HOME/.local/lib" -xzvf "$HOME/.local/lib/${versionGO}"
+      rm -rf "$HOME/.local/lib/${versionGO}"
+      echo -e "Installed ${y}$(go version)${x}"
+    else
+      echo "Abort"
+    fi
+    ;;
+  latest)
+    if [[ ! -d $HOME/.local/lib ]]; then
+      mkdir "$HOME/.local/lib"
+    fi
+    curl -L "${webSite}${latestVersion}" --output "$HOME/.local/lib/${latestVersion}"
+    if [[ -d $HOME/.local/lib/go ]]; then
+      rm -rf "$HOME/.local/lib/go"
+    fi
+    tar -C "$HOME/.local/lib" -xzvf "$HOME/.local/lib/${latestVersion}"
+    rm -rf "$HOME/.local/lib/${latestVersion}"
+    echo -e "Installed ${y}$(go version)${x}"
+    ;;
+  *)
+    echo "Invalid choice"
+    ;;
+esac

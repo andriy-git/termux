@@ -1,0 +1,31 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+case $1 in
+  "")
+    if [[ $(which xclock) ]]; then
+      xclock -update 1 -bg darkgray &
+    fi
+    ;;
+  -w)
+    termdown $2 || echo "No termdown, to download 'pip install termdown'"
+    speaker-test -t sine -f 180 -l 1 >/dev/null & sleep .5 && disown && kill -9 $! &>/dev/null
+    sleep .5
+    speaker-test -t sine -f 180 -l 1 >/dev/null & sleep .5 && disown && kill -9 $! &>/dev/null
+    sleep .5
+    speaker-test -t sine -f 200 -l 1 >/dev/null & sleep .5 && disown && kill -9 $! &>/dev/null
+    sleep .5
+    termdown $3
+    speaker-test -t sine -f 180 -l 1 >/dev/null & sleep 1 && kill -9 $! &>/dev/null
+    ;;
+  -r)
+    while true; do
+      termdown $2
+      sleep 1s
+    done
+    ;;
+  -h)
+    echo "Blank  Indefinite timer"
+    echo "-w     Enter 2 times, one for when to start and another for how long(leave blank for indefinite) "
+    echo "-r     Repeat same amount every time of whatever value"
+    ;;
+esac

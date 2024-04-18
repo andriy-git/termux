@@ -1,0 +1,24 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# My replacement for cd to most common places.
+
+# ZSH way to point to own file
+if [[ -e $funcstack[1] ]]; then
+  currentFile="$funcstack[1]"
+# Bash way to point to own file
+elif [[ -e $BASH_SOURCE ]]; then
+  currentFile="$BASH_SOURCE"
+fi
+
+case $1 in
+  "") cd - || exit 1 ;;
+  bo*) vim ~/.vim/VimWiki/VimWiki/Beginner_Boost.md || exit 1 ;;
+  a*) cd ~/.vim/VimWiki/Argumentation || exit 1;;
+  t*) cd ~/.local/termux || exit 1 ;;
+  s*) cd ~/.local/termux/scripts || exit 1 ;;
+  d*) cd ~/.local/termux/dotfiles || exit 1 ;;
+  w*) cd ~/.vim/VimWiki/VimWiki || exit 1 ;;
+  z*) cd ~/.vim/VimWiki/Zet || exit 1 ;;
+  -h) grep -vE "\-h|sdc1" "${currentFile}" | grep \) | sed -e "s/|.*$//";;
+esac
+

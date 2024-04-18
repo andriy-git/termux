@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Function to pad the input string with '=' characters
+pad_with_equl() {
+    local input=" $* "
+    local length=${#input}
+
+    # Check if the length of the input string is already 64 or more
+    if (( length >= 64 )); then
+        echo "$input"
+        return
+    fi
+
+    # Calculate the number of '=' characters to pad on each side
+    local remaining=$(( (64 - length) / 2 ))
+    local equl_pad=$(printf "%0.s=" $(seq 1 $remaining))
+
+    # Print the padded string
+    echo "$equl_pad$input$equl_pad"
+}
+
+# Main script starts here
+if [ -z "$*" ]; then
+    echo "Usage: $0 <input>"
+    exit 1
+fi
+
+# Call the function to pad the input string with '='
+padded_string=$(pad_with_equl "$*")
+
+echo "$padded_string"

@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+rep=$(tput setaf 11; printf "%s" "${1}" && tput sgr0 setaf 247)
+
+if [[ -n "${2}" ]]; then
+  subDate=$(date -d "- ${2} seconds" +%T)
+  printf "%s Completed: %s\n" "${subDate}" "${rep}"
+else
+  printf "%s Completed: %s\n" "$(date +%T)" "${rep}"
+fi

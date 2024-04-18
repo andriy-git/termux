@@ -1,0 +1,95 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+backtostart=$(pwd)
+
+# Color function for title colors
+function colorTitle1() {
+  tput bold smul setaf 11; echo "${*}" && tput sgr0 setaf 247
+}
+
+# Checks status of repos
+githubStat() {
+  git fetch -q
+  colorTitle1 "$1"
+#  git branch -vv
+  git status | grep -E "behind|ahead"
+  git status -s
+}
+
+case $1 in
+  "")
+    if [[ -d $HOME/.local/termux ]]; then
+      cd "$HOME"/.local/termux || exit 1
+      githubStat termux:
+    fi
+    if [[ -d $HOME/.vim/VimWiki/VimWiki ]]; then
+      cd "$HOME"/.vim/VimWiki/VimWiki || exit 1
+      githubStat wiki:
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Zet ]]; then
+      cd "$HOME"/.vim/VimWiki/Zet || exit 1
+      githubStat zet:
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Argumentation ]]; then
+      cd "$HOME"/.vim/VimWiki/Argumentation || exit 1
+      githubStat args:
+    fi
+    cd "$backtostart" || exit 1
+    ;;
+  push)
+    if [[ -d $HOME/.local/termux ]]; then
+      cd "$HOME"/.local/termux || exit 1
+      colorTitle1 termux:
+      git push origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/VimWiki ]]; then
+      cd "$HOME"/.vim/VimWiki/VimWiki || exit 1
+      colorTitle1 wiki:
+      git push origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Zet ]]; then
+      cd "$HOME"/.vim/VimWiki/Zet || exit 1
+      colorTitle1 zet:
+      git push origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Argumentation ]]; then
+      cd "$HOME"/.vim/VimWiki/Argumentation || exit 1
+      colorTitle1 args:
+      git push origin master
+    fi
+    cd "$backtostart" || exit 1
+    ;;
+  pull)
+    if [[ -d $HOME/.local/termux ]]; then
+      cd "$HOME"/.local/termux || exit 1
+      colorTitle1 termux:
+      git pull origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/VimWiki ]]; then
+      cd "$HOME"/.vim/VimWiki/VimWiki || exit 1
+      colorTitle1 wiki:
+      git pull origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Zet ]]; then
+      cd "$HOME"/.vim/VimWiki/Zet || exit 1
+      colorTitle1 zet:
+      git pull origin master
+    fi
+    if [[ -d $HOME/.vim/VimWiki/Argumentation ]]; then
+      cd "$HOME"/.vim/VimWiki/Argumentation || exit 1
+      colorTitle1 args:
+      git pull origin master
+    fi
+    if [[ -d $HOME/.local/resources ]]; then
+      cd "$HOME"/.local/resources || exit 1
+      colorTitle1 resources:
+      git pull origin master
+    fi
+    cd "$backtostart" || exit 1
+    ;;
+  -h)
+    echo "No argument gives you status of my pages"
+    echo "push    Will push all branches to git"
+    echo "pull    Will pull all branches from git "
+    ;;
+esac

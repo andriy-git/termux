@@ -1,0 +1,71 @@
+# Change window title
+set_new_title(){
+  echo -en "\033]0;$1\a"
+}
+
+# ex = EXtractor for all kinds of archives
+# usage: ex <file>
+ex () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   tar xf $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+export EDITOR=vim
+export VISUAL=vim
+export EDITOR_PREFIX=vim
+
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/termux/scripts:$PATH"
+export GO111MODULE=on #111 is not a mistake
+#GOPATH MUST BE OUTSIDE OF GOROOT directory!!!
+export GOPATH=$HOME/.local/go
+export PATH=$PATH:$GOPATH/bin
+export GOROOT=$HOME/.local/lib/go
+export PATH=$PATH:$GOROOT/bin
+  
+if [[ -z $(cat $HOME/.profile | grep scripts) ]]; then
+  echo -e "export PATH=\"\$HOME/.local/termux/scripts:\$PATH\"" >> $HOME/.profile
+fi
+if [[ -z $(cat $HOME/.profile | grep cargo) ]]; then
+  echo -e "export PATH=\"\$HOME/.cargo/bin:\$PATH\"" >> $HOME/.profile
+fi
+if [[ -z $(cat $HOME/.profile | grep HOME/.local/go) ]]; then
+  echo -e "export GOPATH=\"\$HOME/.local/go\"" >> $HOME/.profile
+  echo -e "export GOROOT=\"\$HOME/.local/lib/go\"" >> $HOME/.profile
+  echo -e "export PATH=\"\$PATH:\$GOPATH/bin\"" >> $HOME/.profile
+  echo -e "export PATH=\"\$PATH:\$GOROOT/bin\"" >> $HOME/.profile
+fi
+
+# Start blinking
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+# Start bold
+export LESS_TERMCAP_md=$(tput bold; tput setaf 2) # green
+# Start stand out
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3) # yellow
+# End standout
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+# Start underline
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1) # red
+# End Underline
+export LESS_TERMCAP_ue=$(tput sgr0)
+# End bold, blinking, standout, underline
+export LESS_TERMCAP_me=$(tput sgr0)

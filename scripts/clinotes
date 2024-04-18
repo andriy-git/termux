@@ -1,0 +1,60 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+dlt=${*:3}
+ins=${*:2}
+myFile="$HOME/.vim/VimWiki/VimWiki/general_notes.md"
+nlViz=5 # amount of lines of notes visible when not all are seen
+
+
+case $1 in
+  enter) # Edits the notes file
+    "${EDITOR}" "${myFile}"
+    ;;
+  view) # Views the last 5 lines
+    case $2 in
+      "")
+        myLC=$(wc -l "${myFile}" | awk '{print $1}')
+        myNum=$(("${myLC}"-"${nlViz}"))
+        if [[ "${myNum}" -gt 0 ]]; then
+          echo "${myNum} hidden, run -a flag to see all the notes."
+        fi
+        nl "${myFile}" | tail -${nlViz}
+        ;;
+      -a)
+        nl "${myFile}"
+        ;;
+    esac
+      ;;
+  edit)
+    case $2 in
+      -r)
+        if [[ -n $3 ]]; then
+          sed -i -e "${dlt}d" "${myFile}"
+          sed -i '/^$/d' "${myFile}"
+          sed -i 's/ *$//' "${myFile}"
+          echo "Note removed."
+        else
+          exec clinotes edit -h
+        fi
+        ;;
+      -rp)
+        sed -i -e "/${dlt}/d" "${myFile}"
+        sed -i '/^$/d' "${myFile}"
+        sed -i 's/ *$//' "${myFile}"
+        echo "Note removed."
+        ;;
+      -h | "")
+        echo "This is an edit portion of the program"
+        echo "If no flags are used, you are actually putting in the note"
+        echo "-rp     Will delete a line from a pattern you put in"
+        echo "-r      Will delete a line number you put in"
+        echo "Just putting in a # will delete that line"
+        echo "Adding a comma #,# will delete from first number to the last in a range"
+        ;;
+      *)
+        echo "- ${ins}" >> "${myFile}"
+        echo "New note added."
+        ;;
+    esac
+    ;;
+esac

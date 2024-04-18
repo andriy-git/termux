@@ -1,0 +1,7 @@
+*.swp
+dotfiles/.vim/VimWiki/Argumentation
+dotfiles/.vim/VimWiki/VimWiki
+dotfiles/.vim/plugged
+dotfiles/.vim/VimWiki/Zet 
+dotfiles/ranger/plugins/*pycache*
+dotfiles/.vim/spell

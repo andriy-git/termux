@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
+
+dir="$HOME/.vim/VimWiki/Argumentation"
+case $1 in
+  "")
+    $EDITOR $dir/README.md
+  ;;
+  -n)
+    wknum=$(\ls $dir | sed -n $2p)
+    echo $wknum
+    $EDITOR $dir/$wknum
+  ;;
+  -h)
+    echo "Fast wiki lookup, editor"
+    echo "no arg      Will take you to args main page"
+    echo "anything    Will edit if existing or give you options from avalibale"
+    echo "-n          Put the number of the page you want to edit"
+  ;;
+  *)
+    if [[ -e $dir/$1.wiki ]]; then
+      $EDITOR $dir/$1.wiki
+    elif [[ -e $dir/$1.md ]]; then
+      $EDITOR $dir/$1.md
+    else
+      echo "\"$1\" does not exist! Options that have \"$1\" in their name:"
+      \ls $dir | sed -e 's/.wiki$//' -e 's/.md$//' | nl | grep --color=ALWAYS -i $1
+    fi
+  ;;
+esac

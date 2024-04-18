@@ -1,0 +1,35 @@
+#!/usr/bin/bash 
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Requires `enter` command
+case $1 in
+  -rn)
+    # ShellCheck is telling me that * in this case instead of @
+    if [[ $2 == *.go ]]; then
+      entr bash -c "clear;go run ${2}" <<< "${2}"
+    else
+      entr bash -c "clear;./${*:2}" <<< "${2}"
+    fi
+    ;;
+  -sc)
+    entr bash -c "clear;shellcheck $2" <<< "${2}"
+    ;;
+  -pm)
+    num=$(stat -c "%a" "${2}") 
+    alp=$(ls -l "${2}" | awk '{print $1}')
+    echo "${2} ${alp} ${num}"
+    ;;
+  -st)
+    num=0
+    time until test "$num" -gt "$2" ;do
+      "${@:3}" > /dev/null
+      num=$((num+1))
+    done
+    ;;
+  -h)
+    echo '-rn   To run code after every save `atester -rn <program> <args>`'
+    echo '-sc   ShellCheck the program `atester -sc <program>`'
+    echo '-pm   Check numeric permisions the program `atester -pm <program>`'
+    echo '-st   Checks speed of execution of commands `atester -st <times> <command>`'
+    ;;
+esac

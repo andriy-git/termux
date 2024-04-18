@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/andriylx/.local/scripts/lib'
+let g:netrw_dirhist_4='/home/andriylx/Downloads'
+let g:netrw_dirhist_3='/home/andriylx/.config/alacritty'
+let g:netrw_dirhist_2='/home/andriylx/.android'
+let g:netrw_dirhist_1='/home/andriylx/.dotfiles/.vim/VimWiki/VimWiki'
+let g:netrw_dirhist_0='/home/andriylx/.vim'
+let g:netrw_dirhist_9='/home/andriylx/.dotfiles/vim'
+let g:netrw_dirhist_8='/home/andriylx/scripts'
+let g:netrw_dirhist_7='/home/andriylx'
+let g:netrw_dirhist_6='/home/andriylx/.dotfiles'

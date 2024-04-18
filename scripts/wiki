@@ -1,0 +1,75 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+dir="$HOME/.vim/VimWiki/VimWiki"
+
+case $1 in
+  "")
+    "${EDITOR}" "${dir}/README.md"
+  ;;
+  -ds) # Deep Search
+    backhome=$(pwd)
+    cd "$dir" || exit 1
+    grep --color=always -iE "${2}" *.md # Glob is the whole point here
+    cd "$backhome" || exit 1
+  ;;
+  -f) # Browse wikis for terminal fzf
+    choice=$(\ls -1 "${dir}" | nl | fzf | awk '{print $2}')
+    if [[ "${choice}" ]]; then
+      nl "${dir}"/"${choice}" | tac | fzf
+    else
+      exit 1
+    fi
+  ;;
+  -n) # Open with a number
+    wknum=$(\ls "$dir" | sed -n "${2}"p)
+    echo "${wknum}"
+    "${EDITOR}" "${dir}"/"${wknum}"
+  ;;
+  -cn) # Cat with number
+    wknum=$(\ls "${dir}" | sed -n "${2}"p)
+    echo "${wknum}"
+    nl "${dir}"/"${wknum}"
+  ;;
+  -c) # Cat a wiki
+    # Test if the input matches .md file in the directory
+    if [[ -e "${dir}"/"${2}".md ]]; then
+      # Cats the chosen .md file
+      nl "${dir}"/"${2}".md
+    # Test if the input matches .wiki file in the directory
+    elif [[ -e "${dir}"/"${2}".wiki ]]; then
+      # Numbers .wiki file
+      nl "${dir}"/"${2}".wiki
+    else
+      # Just says the my input does not match any file
+      echo "\"${2}\" does not exist! Options that have \"$2\" in their name:"
+      # Searches through all the files to see if anything matches the input
+      \ls "${dir}" | sed -e 's/.wiki$//' -e 's/.md$//' | nl | grep --color=ALWAYS -i "${2}"
+    fi
+  ;;
+  -h)
+    echo "Fast wiki lookup, editor"
+    echo "no arg      Will take you to wiki main page"
+    echo "anything    Will edit if existing or give you options from available"
+    echo "-n          Put the number of the page you want to edit"
+    echo "-c          Cats a wiki file"
+    echo "-cn         Cats the number of the page you want to edit"
+    echo "-f          fzf in terminal browse function"
+    echo "-ds         Looks for words inside all wiki files"
+  ;;
+  *)
+    # Test if the input matches .md file in the directory
+    if [[ -e "${dir}"/"${1}".md ]]; then
+      # Opens the chosen .md file
+      "${EDITOR}" "${dir}"/"${1}".md
+    # Test if the input matches .wiki file in the directory
+    elif [[ -e "${dir}"/"${1}".wiki ]]; then
+      # Opens the chosen .wiki file
+      "${EDITOR}" "${dir}"/"${1}".wiki
+    else
+      # Just says the my input does not match any file
+      echo "\"${1}\" does not exist! Options that have \"${1}\" in their name:"
+      # Searches through all the files to see if anything matches the input
+      \ls "${dir}" | sed -e 's/.wiki$//' -e 's/.md$//' | nl | grep --color=ALWAYS -i "${1}"
+    fi
+  ;;
+esac

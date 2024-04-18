@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
+
+# My editor of choice
+editor=vim
+
+options=$(find ~/ ~/.vim/VimWiki -maxdepth 5 -path ~/.cache -prune -o -path ~/.cargo/registry -prune -o -path ~/.local/resources/wallpapers -prune -o -path ~/Downloads -prune -o -path ~/.thunderbird -prune -o -path ~/.minecraft -prune -o -path ~/.wine/drive_c -prune -o -type f -print | grep -viE 'browser|vivaldi|firefox|\.git/|\.swp$|\.dll$|\.exe$|*cache/*' | uniq)
+
+choice=$(echo "${options}" | fzf )
+
+"${editor}" "${choice}"
