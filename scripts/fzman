@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
 if [[ $(man -k .) ]]; then
-  choice="$(man -k . | fzf | awk '{print $1}')"
+  choice="$(man -k . | fzf | awk '{print $1}' | sed 's/,//')"
 else
   choice=$(ls /data/data/com.termux/files/usr/share/man/man* | awk '{print $1}' | sed -E -e 's/\.gz//g' -e 's/.usr\/sha.*$//g' | fzf || exit 1)
 fi
 
 if [[ "${choice}" ]]; then
-  man "${choice}"
+  man "${choice/([1-8])/}"
 fi
