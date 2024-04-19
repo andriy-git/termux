@@ -4,7 +4,7 @@ if [ $3 ]; then
 elif [ $2 ]; then
   cmd=$(command -v $2)
   case $1 in
-    -c) test -n "$cmd" && exec cat "$cmd" ;;
+    -c) test -n "$cmd" && exec bat -pp "$cmd" ;;
     *) echo "You can use -c <command> to cat the command";
   esac
 else
