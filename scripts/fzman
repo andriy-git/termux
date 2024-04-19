@@ -1,10 +1,6 @@
-#!/usr/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 
-if [[ $(man -k .) ]]; then
-  choice="$(man -k . | fzf | awk '{print $1}' | sed 's/,//')"
-else
-  choice=$(ls /data/data/com.termux/files/usr/share/man/man* | awk '{print $1}' | sed -E -e 's/\.gz//g' -e 's/.usr\/sha.*$//g' | fzf || exit 1)
-fi
+choice="$(man -k . | fzf | awk '{print $1}' | sed 's/,//')"
 
 if [[ "${choice}" ]]; then
   man "${choice/([1-8])/}"
