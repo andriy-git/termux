@@ -1,6 +1,11 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-bash -c "$(find ~/ -name dotrestore)"
+if [[ ! -d ~/.local/termux ]]; then
+  mkdir -pv ~/.local
+  mv -rf "$(find ~/ -name turmux)" ~/.local/termux
+fi
+
+bash "$HOME"/.local/termux/scripts/dotrestore
 
 pkg update
 
