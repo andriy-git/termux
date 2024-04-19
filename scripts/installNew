@@ -1,0 +1,17 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+bash -c "$(find ~/ -name dotrestore)"
+
+pkg update
+
+pkg upgrade
+
+pkg install git vim bat zsh fzf gh jq man tmux ncurses-utils openssl-tool ranger eza shellcheck
+
+pip install termdown
+
+mkdir -pv ~/.local/.zsh
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.local/.zsh/zsh-autosuggestions
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/.zsh/zsh-syntax-highlighting
