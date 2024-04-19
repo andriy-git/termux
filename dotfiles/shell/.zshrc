@@ -108,4 +108,5 @@ alias gpt=' noglob gpt'
 
 source ~/.local/termux/dotfiles/shell/aliases
 source ~/.local/termux/dotfiles/shell/sharedFunc
-source /data/data/com.termux/files/home/.local/termux/dotfiles/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /data/data/com.termux/files/home/.local/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /data/data/com.termux/files/home/.local/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
