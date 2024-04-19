@@ -1,4 +1,3 @@
-#!/usr/bin/bash
 #!/data/data/com.termux/files/usr/bin/bash
 
 dir="$HOME/.vim/VimWiki/Argumentation"
