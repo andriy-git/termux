@@ -13,6 +13,10 @@ fi
 case $1 in
   "") cd - || exit 1 ;;
   bo*) vim ~/.vim/VimWiki/VimWiki/Beginner_Boost.md || exit 1 ;;
+  con*) cd ~/.config || exit 1 ;;
+  loc*) cd ~/.local || exit 1 ;;
+  #doc*) cd ~/Documents || exit 1 ;;
+  #dow*) cd ~/Downloads || exit 1 ;;
   a*) cd ~/.vim/VimWiki/Argumentation || exit 1;;
   t*) cd ~/.local/termux || exit 1 ;;
   s*) cd ~/.local/termux/scripts || exit 1 ;;
