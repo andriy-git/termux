@@ -11,7 +11,9 @@ pkg update
 
 pkg upgrade
 
-pkg install git vim bat zsh fzf gh jq man tmux ncurses-utils openssl-tool ranger eza shellcheck
+pkg install git vim bat zsh fzf gh jq man tmux ncurses-utils openssl-tool ranger eza shellcheck -y
+
+pkg uninstall nano ed -y
 
 pip install termdown
 

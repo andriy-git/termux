@@ -18,6 +18,7 @@ alias more=" bat"
 alias path=' echo -e "${PATH//:/\\n}" | uniq'
 alias bookpage='cat ~/.vim/VimWiki/VimWiki/bookreading.md'
 alias figlet=' pyfiglet'
+alias py=' python'
 
 # Edit Config Files
 alias mybash=' $EDITOR ~/.bashrc'

@@ -20,11 +20,12 @@ if [[ "$(command -v pacman)" ]]; then
 fi
 
 # Debian
-if [[ "$(command -v pkcon)" ]]; then
-  colorTitle1 PkCon
-  sudo pkcon update -y
-  sudo apt-get autoclean
-  sudo apt-get autoremove -y
+if [[ "$(command -v pkg)" ]]; then
+  colorTitle1 Pkg
+  pkg update
+  pkg upgrade
+  apt-get autoclean
+  apt-get autoremove -y
 elif [[ "$(command -v apt-get)" ]]; then
   colorTitle1 Apt
   apt-get update
