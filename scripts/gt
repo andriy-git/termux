@@ -10,8 +10,11 @@ elif [[ -e $BASH_SOURCE ]]; then
   currentFile="$BASH_SOURCE"
 fi
 
+#base="/data/data/com.termux"
+
 case $1 in
   "") cd - || exit 1 ;;
+  pg) cd "$(mktemp -d playground.XXX)" || exit 1 ;;
   bo*) vim ~/.vim/VimWiki/VimWiki/Beginner_Boost.md || exit 1 ;;
   con*) cd ~/.config || exit 1 ;;
   loc*) cd ~/.local || exit 1 ;;
