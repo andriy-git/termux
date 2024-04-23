@@ -2,6 +2,7 @@
 set_new_title(){
   echo -en "\033]0;$1\a"
 }
+CDPATH=".:$HOME:$HOME/.local:$HOME/.local/termux:$HOME/.local/termux:dotfiles:.:$HOME:$HOME/.vim/VimWiki"
 
 # ex = EXtractor for all kinds of archives
 # usage: ex <file>
