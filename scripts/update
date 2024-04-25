@@ -22,8 +22,8 @@ fi
 # Debian
 if [[ "$(command -v pkg)" ]]; then
   colorTitle1 Pkg
-  pkg update
-  pkg upgrade
+  pkg update -y
+  pkg upgrade -y
   apt-get autoclean
   apt-get autoremove -y
 elif [[ "$(command -v apt-get)" ]]; then
