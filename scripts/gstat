@@ -12,7 +12,6 @@ githubStat() {
   git fetch -q
   colorTitle1 "$1"
   git branch -vv
-  git status | grep -E "behind|ahead"
   git status -s
 }
 
