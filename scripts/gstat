@@ -39,7 +39,7 @@ case $1 in
     if [[ -d $HOME/.local/termux ]]; then
       cd "$HOME"/.local/termux || exit 1
       colorTitle1 termux:
-      git push origin master
+      git push
     fi
     if [[ -d $HOME/.vim/VimWiki/VimWiki ]]; then
       cd "$HOME"/.vim/VimWiki/VimWiki || exit 1
@@ -62,7 +62,7 @@ case $1 in
     if [[ -d $HOME/.local/termux ]]; then
       cd "$HOME"/.local/termux || exit 1
       colorTitle1 termux:
-      git pull origin master
+      git pull
     fi
     if [[ -d $HOME/.vim/VimWiki/VimWiki ]]; then
       cd "$HOME"/.vim/VimWiki/VimWiki || exit 1
