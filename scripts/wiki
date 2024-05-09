@@ -34,11 +34,11 @@ case $1 in
     # Test if the input matches .md file in the directory
     if [[ -e "${dir}"/"${2}".md ]]; then
       # Cats the chosen .md file
-      nl "${dir}"/"${2}".md
+      bat -p "${dir}"/"${2}".md
     # Test if the input matches .wiki file in the directory
     elif [[ -e "${dir}"/"${2}".wiki ]]; then
       # Numbers .wiki file
-      nl "${dir}"/"${2}".wiki
+      bat -p "${dir}"/"${2}".wiki
     else
       # Just says the my input does not match any file
       echo "\"${2}\" does not exist! Options that have \"$2\" in their name:"
