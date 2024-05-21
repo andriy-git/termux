@@ -19,6 +19,14 @@ mustrestore() {
   fi
 }
 
+if [ ! -d ~/.local ]; then
+  mkdir ~/.local
+fi
+
+if [ ! -d ~/.config ]; then
+  mkdir ~/.config
+fi
+
 # $1 Program $2 My location $3 Necessary file location
 mustrestore ranger ranger "$HOME"/.config/ranger
 mustrestore vim .vim "$HOME"/.vim
